@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 安全机制
 app.use(function(req, res, next) {
   var hostname = access.hostname;
-
+  console.log(req.hostname)
   var valid = false;
   if (hostname) {
     for (var i = 0; i < hostname.length; i++) {
@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
       }
     };
   }
-
+  console.log( req.ip)
   if(!valid) {
     var ip = access.ip;
     if (ip) {
@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
       };
     }
   }
-  
+
   if (valid) {
     next();
   } else {
@@ -45,13 +45,13 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
   shipper.get(function(err, data) {
-    res.json({ access_token: data });
+    res.json(data);
   });
 });
 
 app.get('/ticket', function(req, res) {
   shipper.ticket(function(err, data) {
-    res.json({ ticket: data});
+    res.json(data);
   });
 });
 

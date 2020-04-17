@@ -10,6 +10,8 @@ var cron = '30 * * * *';
 
 // 先刷新 access_token , 再刷新 ticket
 var job = function() {
+  let date = new Date();
+  console.log("----------"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
   wx_flush_access_token.token(function (err, data) {
     shipper.ship(data, function () {
       wx_flush_ticket.ticket(data.access_token, function (err, ticket_data) {
